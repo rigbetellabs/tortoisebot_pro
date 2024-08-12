@@ -1,0 +1,20 @@
+<launch>
+
+  <!-- LIDAR to LIDAR_ODOM -->
+    <node pkg="rtabmap_odom" type="icp_odometry" name="icp_odometry" output="screen">
+      <rosparam command="load" file="$(find tortoisebotpro_odometry)/config/icp.yaml" />
+    <remap from="odom" to="lidar_odom/icp"/>
+    </node>
+  
+  <!-- LIDAR_ODOM + IMU -->
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
+      <rosparam command="load" file="$(find tortoisebotpro_odometry)/config/ekf.yaml" />
+       <remap from="odometry/filtered" to="fused_odom/ekf"/>
+       <remap from="accel/filtered" to="filtered_imu"/>
+    </node>
+
+  <!-- FILTERED ODOM  -->
+    <node pkg="tortoisebotpro_odometry" type="alpha_beta_filter.py" name="alpha_beta_filter"/>
+
+  </launch>
+  

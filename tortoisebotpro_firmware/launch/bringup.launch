@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<launch>
+    <arg name="using_joy" default="false" />
+
+    <group if="$(arg using_joy)">
+
+        <include file="$(find tortoisebotpro_control)/launch/tortoisebotpro_teleop_joy.launch" />
+
+    </group>
+
+    <param
+        command="$(find xacro)/xacro $(find tortoisebotpro_description)/urdf/tortoisebotpro.xacro"
+        name="robot_description" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+    <include file="$(find tortoisebotpro_firmware)/launch/X4-Pro.launch" />
+
+    <node name="serial_node" pkg="rosserial_python" type="serial_node.py" output="screen">
+        <param name="port" type="string" value="/dev/esp" />
+        <param name="baud" type="int" value="115200" />
+    </node>
+
+    <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen">
+        <rosparam command="load" file="$(find usb_cam)/config/usb_cam.yml" />
+    </node>
+
+    <!-- <arg name="image_view" default="false" />
+    <node if="$(arg image_view)" name="image_view" pkg="image_view" type="image_view"
+        respawn="false" output="screen">
+        <remap from="image" to="/usb_cam/image_raw" />
+        <param name="autosize" value="true" />
+    </node> -->
+
+    <node name="wheel_odom" pkg="tortoisebotpro_firmware" type="ticks_to_odom.py" output="screen" />
+
+</launch>

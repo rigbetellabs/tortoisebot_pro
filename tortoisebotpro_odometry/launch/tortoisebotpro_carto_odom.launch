@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<launch>
+
+	<node name="cartographer_node" pkg="cartographer_ros" type="cartographer_node"
+		args=" 
+		-configuration_directory $(find tortoisebotpro_odometry)/config 
+		-configuration_basename carto_odom.lua"
+		output="screen">
+	</node>
+</launch>

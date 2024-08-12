@@ -1,0 +1,23 @@
+<launch>
+
+    <node pkg="joy" type="joy_node" name="joy_node" output="screen">
+      <rosparam param="dev">/dev/input/js0</rosparam>
+      <rosparam param="config">xbox</rosparam>
+    </node>
+
+    <node pkg="tortoisebotpro_control" type="teleop_twist_joy" name="teleop_twist_joy" output="screen">
+    </node>
+    
+
+   <!-- <launch>
+     <node respawn="true" pkg="joy" type="joy_node" name="cepheus_joy_node" />
+   
+     <param name="axis_linear" value="1" type="int"/>
+     <param name="axis_angular" value="0" type="int"/>
+     <param name="scale_linear" value="0.2" type="double"/>
+     <param name="scale_angular" value="0.4" type="double"/>
+     <node pkg="auto_joy_teleop" type="auto_joy_teleop" name="waypoint_joy_teleop"/>
+   
+   
+   </launch> -->
+</launch>

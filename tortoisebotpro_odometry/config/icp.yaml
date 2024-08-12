@@ -1,0 +1,39 @@
+#publish_tf: true
+publish_tf: false
+frame_id: base_link
+odom_frame_id: odom
+wait_for_transform: true
+wait_for_transform_duration: 0.100000
+log_to_rosout_level: 4
+# initial_pose: xyz=0.000000,0.000000,0.000000 rpy=0.000000,-0.000000,0.000000
+ground_truth_base_frame_id: base_link
+# config_path: 
+publish_null_when_lost: true
+guess_min_translation: 0.1000
+guess_min_rotation: 0.050000
+guess_min_time: 0.000000
+expected_update_rate: 0.000000 Hz
+max_update_rate: 0.000000 Hz
+min_update_rate: 0.000000 Hz
+wait_imu_to_init: false
+Icpqueue_size: 1
+
+# No need to cut smaples
+Icpscan_cloud_max_points: 0
+Icpscan_cloud_is_2d: false
+
+# No need to downscale
+Icpscan_downsampling_step: 1
+
+# Min max of range to be considered
+Icpscan_range_min: 0.010000 m
+Icpscan_range_max: 4.000000 m
+
+# Voxel size
+Icpscan_voxel_size: 0.010 m
+
+Icpscan_normal_k: 5
+Icpscan_normal_radius: 0.000000 m
+Icpscan_normal_ground_up: 0.000000
+Icpdeskewing: false
+Icpdeskewing_slerp: false

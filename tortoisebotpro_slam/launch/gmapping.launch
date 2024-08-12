@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+
+<launch>
+  
+    <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
+         <rosparam command="load" file="$(find tortoisebotpro_slam)/config/gmapping.yaml" />
+    </node>
+
+
+</launch>
