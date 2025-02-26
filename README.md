@@ -1,35 +1,5 @@
 
-# Tortoisebot Pro
-## ROS1 Noetic Release
-
-![tortoisebotpromax Logo](images/ttbpro.png)
-
-<div align="center">
-
-Welcome to the official public repository for **TortoisebotPro** by **RigBetel Labs**.
-
-**Purpose:**  
-This repository hosts essential documentation and code for *TortoisebotPro Robot*, facilitating transparency and collaboration.
-
-**Privacy:**  
-Certain sensitive packages and scripts have been excluded to maintain privacy standards.
-
-**Contents:**  
-- **Documentation:** Detailed guides and technical specifications.
-- **Codebase:** Essential source code for *TortoisebotPro Robot*.
-- **Resources:** Supplementary materials and dependencies.
-
-
-**Contact:**  
-For inquiries and collaboration opportunities, reach out to RigBetel Labs.
-
-
-<a href="https://rigbetellabs.com/">![Website](https://img.shields.io/website?down_color=lightgrey&down_message=offline&label=Rigbetellabs%20Website&style=for-the-badge&up_color=green&up_message=online&url=https%3A%2F%2Frigbetellabs.com%2F)</a>
-<a href="https://www.youtube.com/channel/UCfIX89y8OvDIbEFZAAciHEA">![Youtube Subscribers](https://img.shields.io/youtube/channel/subscribers/UCfIX89y8OvDIbEFZAAciHEA?label=YT%20Subscribers&style=for-the-badge)</a>
-<a href="https://www.instagram.com/rigbetellabs/">![Instagram](https://img.shields.io/badge/Follow_on-Instagram-pink?style=for-the-badge&logo=appveyor?label=Instagram)</a>
-
-
-</div>
+<h1 align="center"> TortoiseBot-Pro </h1>
 
 <details open="open">
   <summary>Table of Contents</summary>
@@ -102,7 +72,7 @@ catkin_make
 
 Installation of dependent packages,
 ```py
-cd ~/catkin_ws/src/tortoisebot_pro
+cd ~/catkin_ws/src/
 cat requirements.txt | xargs sudo apt-get install -y 
 # This installs all the packages mentioned in the requirements.txt
 ```
@@ -112,7 +82,7 @@ cat requirements.txt | xargs sudo apt-get install -y
 
 ```py
 cd ~/catkin_ws/src/
-git clone https://github.com/YDLIDAR/ydlidar_ros_driver.git
+git clone https://github.com/rigbetellabs/ydlidar_ros.git
 ```
 
 ## 2. Connection
@@ -527,8 +497,6 @@ roslaunch tortoisebotpro_navigation tortoisebotpro_navigation.launch exploration
 ```py
 roslaunch tortoisebotpro_firmware bringup.launch using_joy:=true # Set to true if using Xbox controller to control the robot
 ```
-> [!IMPORTANT]
-> The current bringup.launch file looks for YDLidar X4-Pro model to start the scanning, if you have X4 model on your robot, edit the launch file from X4-Pro.launch to X4.launch in bringup.launch
 
 ```py
 rosrun tortoisebotpro_control tortoisebot_teleop_key.py # If using computer keyboard to control the robot
