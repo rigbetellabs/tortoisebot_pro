@@ -121,44 +121,10 @@ Successful execution looks something like this.
 > [!IMPORTANT]
 > We have tested mapping and navigation using Gmapping and Cartographer, Cartographer has some inherent flaws hence we prefer to use Gmapping over Cartographer. Launch files for cartographer are provided for you to experiment. Description for these launch files are provided but the launch sequence for these lauch file has not been added.
 
-### 3.1 [tortoisebotpro_control](https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_control/)
 
-To manually control the robot.
+### 3.1 [tortoisebotpro_description](https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_description/)
 
-<table>
-    <thead>
-        <tr>
-            <th>File</th>
-            <th>Description</th>
-            <th>Nodes Launched</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><a href="https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_control/launch/tortoisebotpro_teleop_joy.launch">tortoisebotpro_teleop_joy.launch</a>
-            </td>
-            <td>Manually control the robot using Xbox controller.</td>
-            <td>
-                   <code>/joy_node</code>,
-                    <code>/teleop_twist_joy</code> from <code>tortoisebotpro_control</code>
-                    </td>
-        </tr>
-        <tr>
-            <td><a href="https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_control/src/tortoisebot_teleop_key.py">tortoisebot_teleop_key.py</a></td>
-            <td>Modified version of <code>teleop_twist_keyboard</code> from <code>teleop_twist_keyboard</code>.</td>
-            <td><code>/teleop_twist_keyboard</code></td>
-        </tr>
-        <tr>
-            <td><a href="https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_control/src/tortoisebotpro_teleop_joy.cpp">tortoisebotpro_teleop_joy.cpp</a></td>
-            <td>Custom remapping from <code>joy</code> to <code>cmd_vel</code> for controlling the robot using an Xbox controller.</td>
-            <td><code>/teleop_joy</code></td>
-        </tr>
-    </tbody>
-</table>
-
-### 3.2 [tortoisebotpro_description](https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_description/)
-
-Holds the robot description including `urdf`, `stl`, config files for `rviz` and `gazebo`
+Holds the robot description including `urdf`, `stl`
 
 <table>
     <thead>
@@ -170,26 +136,12 @@ Holds the robot description including `urdf`, `stl`, config files for `rviz` and
     </thead>
     <tbody>
         <tr>
-            <td><a href="https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_description/launch/display.launch">display.launch</a></td>
-            <td>Visualize the URDF of the robot in RVIZ.</td>
+            <td><a href="https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_description/launch/state_publisher.launch.py">state_publisher.launch.py</a></td>
+            <td>Starts the publishign of the robot urdf on the topic /robot_description.</td>
             <td>
-                   <code>/rviz</code>, <code>/robot_state_publisher</code>,
+                    <code>/robot_state_publisher</code>,
                     <code>/joint_state_publisher</code>
                     </td>
-        </tr>
-        <tr>
-            <td><a href="https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_description/launch/gazebo.launch">gazebo.launch</a></td>
-            <td>Visualize the Robot in an empty world within Gazebo.</td>
-            <td>
-                   <code>/gazebo</code>, <code>/robot_state_publisher</code>
-            </td>
-        </tr>
-        <tr>
-            <td><a href="https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_description/launch/rviz.launch">rviz.launch</a></td>
-            <td>Just RVIZ, useful to visualize while mapping or navigation.</td>
-            <td>
-                <code>/rviz</code>
-            </td>
         </tr>
     </tbody>
 </table>
@@ -208,47 +160,11 @@ As the name suggest get all the sensor and actuation topics available to you
     </thead>
     <tbody>
         <tr>
-            <td><a href="https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_firmware/launch/bringup.launch">bringup.launch</a></td>
-            <td>Launches Robot state publishers, serial node for communication with ESP32, Lidar driver, USB can driver.</td>
+            <td><a href="https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_firmware/launch/micro_ros.launch.py">micro_ros.launch.py</a></td>
+            <td>Launches Robot state publishers, serial node for communication with ESP32.</td>
             <td>
-                <code>/robot_state_publisher</code>, <code>/rosout</code>, <code>/serial_node</code>, <code>/usb_cam</code>, <code>/wheel_odom</code>, <code>/ydlidar_node</code>
+                <code>/cmd_vel</code>, <code>/wheels_ticks</code>, <code>/imu_data</code>
             </td>
-        <!-- </tr>
-        <tr>
-            <td>server_bringup.launch</td>
-            <td>Launches Cartographer node to produce odometry if needed.</td>
-            <td>
-            Cartographer
-            </td>
-        </tr> -->
-        <tr>
-            <td><a href="https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_firmware/scripts/fake_landmark.py">fake_landmark.py</a></td>
-            <td>Publish fake landmarks to be used by Cartographer.</td>
-            <td>
-                <code>/landmark_sampler</code>
-            </td>
-        </tr>
-        <tr>
-            <td><a href="https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_firmware/scripts/odom_pub.py">odom_pub.py</a></td>
-            <td>Takes the odom from TF published by Cartographer and publishes it as an individual topic. Only required when used with a real robot.</td>
-            <td>
-                <code>/odom_publisher</code>
-            </td>
-        </tr>
-        <tr>
-            <td><a href="https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_firmware/scripts/ticks_to_odom.py">ticks_to_odom.py</a></td>
-            <td>Publishes Robot odometry as perceived by wheel encoders.</td>
-            <td>
-                <code>/wheel_odom</code>
-            </td>
-        </tr>
-        <tr>
-            <td><a href="https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_firmware/scripts/wavepoints.py">wavepoints.py</a></td>
-            <td>Makes robot traverse from one point to another.</td>
-            <td>
-                <code>/csv_to_goal_publisher</code>
-            </td>
-        </tr>
     </tbody>
 </table>
 
@@ -266,19 +182,9 @@ Simulation environment for tortoisebotpro in Gazebo
     </thead>
     <tbody>
         <tr>
-            <td><a href="https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_gazebo/launch/tortoisebotpro_docking.launch">tortoisebotpro_docking.launch</a></td>
-            <td>Docking environment for charging.</td>
-            <td><code>/spawn_urdf</code>, <code>/joint_state_publisher</code>, <code>/robot_state_publisher</code>, <code>/gazebo</code></td>
-        </tr>
-        <tr>
-            <td><a href="https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_gazebo/launch/tortoisebotpro_empty_world.launch">tortoisebotpro_empty_world.launch</a></td>
-            <td>Just an empty world.</td>
-            <td><code>/spawn_urdf</code>, <code>/joint_state_publisher</code>, <code>/robot_state_publisher</code>, <code>/gazebo</code></td>
-        </tr>
-        <tr>
-            <td><a href="https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_gazebo/launch/tortoisebotpro_playground.launch">tortoisebotpro_playground.launch</a></td>
-            <td>Tortoisebot needs a house to live in.</td>
-            <td><code>/spawn_urdf</code>, <code>/joint_state_publisher</code>, <code>/robot_state_publisher</code>, <code>/gazebo</code></td>
+            <td><a href="https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_gazebo/launch/gazebo.launch.py">gazebo.launch.py</a></td>
+            <td>Launches gazebo basic world.</td>
+            <td><code>/spawn_urdf</code>, <code>/gazebo</code></td>
         </tr>
     </tbody>
 </table>
@@ -297,38 +203,17 @@ Autonomous navigation of robot using `move_base` in a know as well as unknown en
     </thead>
     <tbody>
         <tr>
-            <td><a href="https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_navigation/launch/amcl.launch">amcl.launch</a></td>
-            <td>Let's localize the robot in the environment, not always robot know where it is in the environment.</td>
+            <td><a href="https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_navigation/launch/navigation.launch.py">navigation.launch.py</a></td>
+            <td>Launches the nav2 stack to navigate the robot, and based on exploration parameter it launches with saved map and without saved map  .</td>
             <td>
-                <code>/amcl</code>
-            </td>
-        </tr>
-        <tr>
-            <td><a href="https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_navigation/launch/move_base.launch">move_base.launch</a></td>
-            <td>The node responsible to get the robot moving from one point to other avoiding dynamic as well as static obstacles.<br>
-             Parameters for the move_base can be found in <code>param</code> directory</td>
-            <td>
-                <code>/move_base</code>
-            </td>
-        </tr>
-        <tr>
-            <td><a href="https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_navigation/launch/tortoisebotpro_navigation.launch">tortoisebotpro_navigation.launch</a></td>
-            <td>Launches <code>move_base</code> along with presaved map or online map generation using 
-OR
-
-roslaunch tortoisebotpro_odometry tortoisebotpro_carto_odom.launch/gmapping based upon your preference.<br>
-                If parameter <code>exploration</code> with the launch file is set true then the map is provided by the mapping agent - cartographer/gmapping else offline map stored in the <code>map</code> directory of the <code>tortoisebotpro_navigation</code> package is used. Which map you may ask well set the parameter <code>map_file</code> to the map that will be used.<br>
-                        To switch mapping agent from gmapping to cartographer while in exploration set <code>using_gmapping</code> param to false. 
-            </td>
-            <td>
-             <code>/slam_gmapping</code>, <code>/cartographer_occupancy_grid_node</code>, <code>/map_server</code>, <code>/rviz</code>, <code>/move_base</code>
+                <code>/nav2</code>
             </td>
         </tr>
     </tbody>
 </table>
 
 
-### 3.6 [tortoisebotpro_odometry](https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_odometry/)
+<!-- ### 3.6 [tortoisebotpro_odometry](https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_odometry/)
 
 How will the robot know where it is in the environment? Well it generates its own odometry for the purpose.
 
@@ -371,7 +256,7 @@ How will the robot know where it is in the environment? Well it generates its ow
 	<img src="images/odom.png" width="900"/>
 </p>
 
-TF of odom is broadcasted by `alpha_beta_filter` for mapping agents.
+TF of odom is broadcasted by `alpha_beta_filter` for mapping agents. -->
 
 ### 3.7 [tortoisebotpro_slam](https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_slam/)
 
@@ -386,26 +271,10 @@ SLAM!
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td><a href="https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_slam/launch/gmapping.launch">gmapping.launch</a></td>
-            <td>To generate the map of the environment using Gmapping. NOTE: Gmapping requires <code>/scan</code> topic as well <code>odom =&gt; base_link</code> transform.<br>
-              Parameters for the Gmapping can be found in <code>config</code> directory.</td>
-            <td>
-                <code>/slam_gmapping</code>
-            </td>
-        </tr>
-        <tr>
             <td><a href="https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_slam/launch/cartographer.launch">cartographer.launch</a></td>
             <td>To generate the map of the environment using Cartographer.</td>
             <td>
                 <code>/cartographer_node</code>
-            </td>
-        </tr>
-        <tr>
-            <td><a href="https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_slam/launch/map_saver.launch">map_saver.launch</a></td>
-            <td>A map generated should be saved for navigation.</td>
-            <td>
-                <code>/map_saver</code>
             </td>
         </tr>
     </tbody>
@@ -426,65 +295,32 @@ Performs,
 #### 4.1.1 Map Generation
 
 ```py
-roslaunch tortoisebotpro_gazebo tortoisebotpro_docking.launch # To launch Gazebo simulation environment
+ros2 launch tortoisebotpro_bringup autobringup.launch use_sim_time:=True exploration:=True # To launch The robot in sim without a saved map
 ```
 
 <p align="center">
 	<img src="images/sim_gz.png" width="700"/>
 </p>
 
-```py
-roslaunch tortoisebotpro_slam gmapping.launch # To generate Map
-```
-
-```py
-roslaunch tortoisebotpro_description rviz.launch # To visualize the map generated
-```
 
 <p align="center">
 	<img src="images/sim_gmap.png" width="700"/>
 </p>
 
 ```py
-rosrun tortoisebotpro_control tortoisebot_teleop_key.py # To control the robot using keyboard
+ros2 run teleop_twist_keyboard teleop_twist_keyboard # To control the robot using keyboard
 ```
 
-Save the map after satisfaction,
-```py
-roslaunch tortoisebotpro_slam map_saver.launch map_name:=your_map  # To save the map
-# Change your_map to what ever you want
-```
 
 #### 4.1.2 Autonomous Navigation in the saved map
 
 ```py
-roslaunch tortoisebotpro_gazebo tortoisebotpro_docking.launch # To launch Gazebo simulation environment
+ros2 launch tortoisebotpro_bringup autobringup.launch use_sim_time:=True exploration:=False # To launch robot in sim with a saved map
 ```
 
-```py
-roslaunch tortoisebotpro_navigation tortoisebotpro_navigation.launch exploration:=false map_file:=docking 
-```
 
 <p align="center">
 	<img src="images/sim_mapnav.png" width="700"/>
-</p>
-
-#### 4.1.3 SLAM
-
-```py
-roslaunch tortoisebotpro_gazebo tortoisebotpro_docking.launch # To launch Gazebo simulation environment
-```
-
-```py
-roslaunch tortoisebotpro_navigation tortoisebotpro_navigation.launch exploration:=true
-```
-
-<p align="center">
-	<img src="images/sim_init.png" width="700"/>
-</p>
-
-<p align="center">
-	<img src="images/sim_lat.png" width="700"/>
 </p>
 
 ### 4.2 Actual Robot
@@ -495,36 +331,14 @@ roslaunch tortoisebotpro_navigation tortoisebotpro_navigation.launch exploration
 #### 4.2.1 Map Generation
 
 ```py
-roslaunch tortoisebotpro_firmware bringup.launch using_joy:=true # Set to true if using Xbox controller to control the robot
+ros2 launch tortoisebotpro_bringup autobringup.launch use_sim_time:=False exploration:=True # To launch real robot in without a saved map
 ```
 
 ```py
-rosrun tortoisebotpro_control tortoisebot_teleop_key.py # If using computer keyboard to control the robot
-```
-
->[!NOTE]
-> If you are using XBOX controller to control the robot set the `using_joy` argument within the `bringup.launch` to `true` and donot use `tortoisebot_teleop_key.py` and if `teleop_twist_keyboard` set the `using_joy` argument within the `bringup.launch` to `false` and execute tortoisebot_teleop_key.py
-
-<p align="center">
-	<img src="images/gamepad.png" width="700"/>
-</p>
-
-Config to use the XBOX controller
-
-```py
-roslaunch tortoisebotpro_odometry tortoisebotpro_icp_odom.launch # TO generate Odometry
+ros2 run teleop_twist_keyboard teleop_twist_keyboard # If using computer keyboard to control the robot
 ```
 
 
-```py
-roslaunch tortoisebotpro_slam gmapping.launch # To generate Map
-```
-
-Save the map after satisfaction,
-```py
-roslaunch tortoisebotpro_slam map_saver.launch map_name:=your_map 
-# Change your_map to what ever you want
-```
 
 <p align="center">
 	<img src="images/robo_map.jpg" width="700"/>
@@ -533,15 +347,7 @@ roslaunch tortoisebotpro_slam map_saver.launch map_name:=your_map
 #### 4.2.2 Autonomous Navigation in the saved map
 
 ```py
-roslaunch tortoisebotpro_firmware bringup.launch 
-```
-
-```py
-roslaunch tortoisebotpro_odometry tortoisebotpro_icp_odom.launch # TO generate Odometry
-```
-
-```py
-roslaunch tortoisebotpro_navigation tortoisebotpro_navigation.launch exploration:=false map_file:=your_map 
+ros2 launch tortoisebotpro_bringup autobringup.launch use_sim_time:=False exploration:=False # To launch real robot in with a saved map
 ```
 
 
@@ -549,57 +355,6 @@ roslaunch tortoisebotpro_navigation tortoisebotpro_navigation.launch exploration
 	<img src="images/robo_nav.jpg" width="700"/>
 </p>
 
-
-#### 4.2.3 SLAM
-
-```py
-roslaunch tortoisebotpro_firmware bringup.launch 
-```
-
-```py
-roslaunch tortoisebotpro_odometry tortoisebotpro_icp_odom.launch # TO generate Odometry
-```
-
-```py
-roslaunch tortoisebotpro_navigation tortoisebotpro_navigation.launch exploration:=true
-```
-
-<p align="center">
-	<img src="images/robo_slam.jpg" width="700"/>
-</p>
-
-> [!TIP]
-> For you to visualize the maps, robot position you will need to connect robot and your computer in a `ROS_MASTER` and `ROS_SLAVE` configuration. Follow the below instructions to do so
-
-Open a terminal editor to edit `.bashrc`
-
-```py
-nano ~/.bashrc
-```
-
-Paste the below code with right credentials
-
-```py
-export ROS_MASTER_URI=http://"your-robot-ip":11311
-export ROS_HOSTNAME="your-computer-ip"
-```
-
-How to find your computer ip,
-
-```py
-hostname -I
-```
-
-<p align="center">
-	<img src="images/ip.png" width="300"/>
-</p>
-
-And then launch,
-
-
-```py
-roslaunch tortoisebotpro_description rviz.launch # To visualize the map generated
-```
 
 
 ## 5. General Robot Information
