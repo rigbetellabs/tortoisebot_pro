@@ -1,4 +1,27 @@
 
+
+# Tortoisebot-Pro ROS2 Humble Release
+
+# ![TortoiseBot Banner](https://github.com/rigbetellabs/tortoisebot_docs/raw/master/imgs/packaging/pack_front.png)
+
+![stars](https://img.shields.io/github/stars/rigbetellabs/tortoisebot?style=for-the-badge)
+![forks](https://img.shields.io/github/forks/rigbetellabs/tortoisebot?style=for-the-badge)
+![watchers](https://img.shields.io/github/watchers/rigbetellabs/tortoisebot?style=for-the-badge)
+![repo-size](https://img.shields.io/github/repo-size/rigbetellabs/tortoisebot?style=for-the-badge)
+![contributors](https://img.shields.io/github/contributors/rigbetellabs/tortoisebot?style=for-the-badge)
+
+---
+<p align="center"><a href="#connect-with-us-">Connect with Us</a> • <a href="#1-installation">Installation</a> 
+
+<h1 align="center"> TortoiseBot-Pro </h1>
+
+# Connect with us ![some-changes](https://img.shields.io/badge/some_changes-yellow)
+
+<a href="https://rigbetellabs.com/">![Website](https://img.shields.io/website?down_color=lightgrey&down_message=offline&label=Rigbetellabs%20Website&style=for-the-badge&up_color=green&up_message=online&url=https%3A%2F%2Frigbetellabs.com%2F)</a>
+<a href="https://rigbetellabs.com/discord">![Discord Channel](https://img.shields.io/discord/890669104330063903?logo=Discord&style=for-the-badge)</a>
+<a href="https://www.youtube.com/channel/UCfIX89y8OvDIbEFZAAciHEA">![Youtube Subscribers](https://img.shields.io/youtube/channel/subscribers/UCfIX89y8OvDIbEFZAAciHEA?label=YT%20Subscribers&style=for-the-badge)</a>
+<a href="https://www.instagram.com/rigbetellabs/">![Instagram](https://img.shields.io/badge/Follow_on-Instagram-pink?style=for-the-badge&logo=appveyor?label=Instagram)</a>
+
 <h1 align="center"> TortoiseBot-Pro </h1>
 
 <details open="open">
@@ -10,7 +33,7 @@
     </li>
     <li><a href="#3-package-description">Package Description</a>
         <ol>
-            <li><a href="#31-tortoisebotpro_control">tortoisebotpro_control</a>
+            <li><a href="#31-tortoisebotpro_bringup">tortoisebotpro_bringup</a>
             </li>
             <li><a href="#32-tortoisebotpro_description">tortoisebotpro_description</a>
             </li>
@@ -19,9 +42,6 @@
             <li><a href="#34-tortoisebotpro_gazebo">tortoisebotpro_gazebo</a>
             </li>
             <li><a href="#35-tortoisebotpro_navigation">tortoisebotpro_navigation</a>
-            </li>
-            <li><a href="#36-tortoisebotpro_odometry">tortoisebotpro_odometry</a>
-            </li>
             <li><a href="#37-tortoisebotpro_slam">tortoisebotpro_slam</a>
             </li>
             <li><a href="#38-installsh">install.sh</a></li>
@@ -51,6 +71,9 @@
             <li><a href="#54-usb-ports">USB Ports</a></li>
         </ol>
     </li>
+        </li>
+        <li><a href="#⚠️-6-usb-port-configuration-for-esp-and-lidar">USB Port Configuration for ESP and LiDAR</a></li>
+    </li>
 </ol>
 </details>
 
@@ -60,19 +83,19 @@
 Clone the repository into your workspace,
 
 ```py
-cd ~/catkin_ws/src # Assuming catkin_ws is the name of the workspace
+cd ~/ros2_ws/src # Assuming ros2_ws is the name of the workspace
 git clone https://github.com/rigbetellabs/tortoisebot_pro.git
 ```
 
 Build the workspace,
 ```py
-cd ~/catkin_ws/
-catkin_make
+cd ~/ros2_ws/
+colcon build
 ```
 
 Installation of dependent packages,
 ```py
-cd ~/catkin_ws/src/
+cd ~/ros2_ws/src/
 cat requirements.txt | xargs sudo apt-get install -y 
 # This installs all the packages mentioned in the requirements.txt
 ```
@@ -81,7 +104,7 @@ cat requirements.txt | xargs sudo apt-get install -y
 > Check if you already have the lidar packages installed; if not, get the packages from repos below.
 
 ```py
-cd ~/catkin_ws/src/
+cd ~/ros2_ws/src/
 git clone https://github.com/rigbetellabs/ydlidar_ros.git
 ```
 
@@ -116,13 +139,78 @@ Successful execution looks something like this.
 	<img src="images/connect.png" width="900"/>
 </p>
 
+
 ## 3. Package Description
 
-> [!IMPORTANT]
-> We have tested mapping and navigation using Gmapping and Cartographer, Cartographer has some inherent flaws hence we prefer to use Gmapping over Cartographer. Launch files for cartographer are provided for you to experiment. Description for these launch files are provided but the launch sequence for these lauch file has not been added.
+### 3.1 [tortoisebotpro\_bringup](https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_bringup/)
+
+Provides a unified launch file to bring up the entire TortoiseBot Pro system including simulation, URDF, sensors, and navigation stack.
+
+<table>
+    <thead>
+        <tr>
+            <th>File</th>
+            <th>Description</th>
+            <th>Nodes Launched</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><a href="https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_bringup/launch/autobringup.launch.py">autobringup.launch.py</a></td>
+            <td>
+                Launches the complete robot system including state publisher, Gazebo (for simulation), camera node, micro-ROS agent, Cartographer or Nav2 (based on argument), depending on mode selected.<br><br>
+                <b>Arguments:</b><br>
+                <code>use_sim_time</code>: Set to <code>True</code> for simulation, <code>False</code> for real robot.<br>
+                <code>exploration</code>: Set to <code>True</code> to run SLAM (Cartographer), <code>False</code> to use pre-saved map with Nav2.
+            </td>
+            <td>
+                <code>/robot_state_publisher</code>,<br>
+                <code>/joint_state_publisher</code>,<br>
+                <code>gazebo</code>,<br>
+                <code>camera_controller</code>,<br>
+                <code>micro_ros_agent</code>,<br>
+                <code>nav2_bringup</code> or <code>cartographer</code>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+**Example Commands:**
+
+* **Simulation + SLAM (exploration):**
+
+  ```bash
+  ros2 launch tortoisebotpro_bringup autobringup.launch.py use_sim_time:=True exploration:=True
+  ```
+
+* **Simulation + Navigation (with saved map):**
+
+  ```bash
+  ros2 launch tortoisebotpro_bringup autobringup.launch.py use_sim_time:=True exploration:=False
+  ```
+
+* **Real Robot + SLAM (exploration):**
+
+  ```bash
+  ros2 launch tortoisebotpro_bringup autobringup.launch.py use_sim_time:=False exploration:=True
+  ```
+
+* **Real Robot + Navigation (with saved map):**
+
+  ```bash
+  ros2 launch tortoisebotpro_bringup autobringup.launch.py use_sim_time:=False exploration:=False
+  ```
+
+**To save a map after SLAM:**
+
+```bash
+ros2 run nav2_map_server map_saver_cli -f /home/<your-nuc-user>/ros2_ws/src/tortoisebot_pro-ros2/tortoisebotpro_navigation/maps/test1
+```
+
+> Replace `<your-nuc-user>` with your actual robot's NUC username in the path.
 
 
-### 3.1 [tortoisebotpro_description](https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_description/)
+### 3.2 [tortoisebotpro_description](https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_description/)
 
 Holds the robot description including `urdf`, `stl`
 
@@ -258,7 +346,7 @@ How will the robot know where it is in the environment? Well it generates its ow
 
 TF of odom is broadcasted by `alpha_beta_filter` for mapping agents. -->
 
-### 3.7 [tortoisebotpro_slam](https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_slam/)
+### 3.6 [tortoisebotpro_slam](https://github.com/rigbetellabs/tortoisebot_pro/blob/master/tortoisebotpro_slam/)
 
 SLAM!
 
@@ -280,11 +368,6 @@ SLAM!
     </tbody>
 </table>
 
-### 3.8 install.sh
-
-Performs,
-<br>
-- Installation of udev rules to hardcode the physical USB ports
 
 **We have installed everything for you no need to worry about!**
 
@@ -561,3 +644,179 @@ A strict rule needs to be followed while connecting Lidar, ESP32 and USB camera.
 <p align="center">
 	<img src="images/front.png" width="700"/>
 </p>
+
+## ⚠️ 6. USB Port Configuration for ESP and LiDAR
+
+To ensure consistent port names for the ESP and LiDAR devices across reboots and plug-in orders, we assign **static USB names** using **udev rules**. Follow the steps below carefully and **only on the robot's NUC via SSH**.
+
+> \[!IMPORTANT]
+> This setup ensures your ESP and LiDAR always map to `/dev/esp` and `/dev/lidar`, respectively. This is necessary because the launch files in the repository are already configured to use these port names.
+> If not set correctly, the robot will **fail to communicate with the microcontroller or the LiDAR**.
+
+---
+
+### Step-by-step Instructions
+
+#### ✅ Step 1: Connect the ESP to the NUC
+
+Plug the ESP device into the NUC using the USB port.
+
+Check the device path:
+
+```bash
+ls /dev/ttyUSB*
+```
+
+It should show something like:
+
+```
+/dev/ttyUSB0
+```
+
+Now identify the USB ID:
+
+```bash
+udevadm info --name=/dev/ttyUSB0 --attribute-walk | grep KERNELS
+```
+
+You will see an output like this:
+
+```
+ATTRS{...}
+KERNELS=="1-1"
+ATTRS{...}
+```
+
+> \[!NOTE]
+> **Note down the line with `KERNELS=="..."`**. This identifies the USB path for the ESP.
+> In this example, it is:
+> `KERNELS=="1-1"`
+
+---
+
+#### ✅ Step 2: Connect the LiDAR to the NUC
+
+Now plug the **LiDAR** (e.g., YD LiDAR) into another USB port.
+
+Again check the device path:
+
+```bash
+ls /dev/ttyUSB*
+```
+
+Now you'll see:
+
+```
+/dev/ttyUSB0  /dev/ttyUSB1
+```
+
+(Assuming the ESP is still connected as `/dev/ttyUSB0`, the new one `/dev/ttyUSB1` is the LiDAR.)
+
+Now run:
+
+```bash
+udevadm info --name=/dev/ttyUSB1 --attribute-walk | grep KERNELS
+```
+
+You'll get an output like:
+
+```
+ATTRS{...}
+KERNELS=="1-2"
+ATTRS{...}
+```
+
+> \[!NOTE]
+> Again, **note down** the line with `KERNELS=="..."`.
+> In this example: `KERNELS=="1-2"`
+
+---
+
+#### ✅ Step 3: Edit the `install.sh` File
+
+Now, open the file:
+
+```bash
+cd ~/ros2_ws/src/tortoisebot_pro-ros2-humble
+```
+
+Edit the `install.sh` script. Replace the values in the following lines with what you got in Steps 1 and 2:
+
+```bash
+SUBSYSTEM=="tty", KERNELS=="1-2", SYMLINK+="esp"
+SUBSYSTEM=="tty", KERNELS=="1-1", SYMLINK+="lidar"
+```
+
+For example, if:
+
+* ESP → `KERNELS=="1-1"`
+* LiDAR → `KERNELS=="1-2"`
+
+Then your lines should be:
+
+```bash
+SUBSYSTEM=="tty", KERNELS=="1-1", SYMLINK+="esp"
+SUBSYSTEM=="tty", KERNELS=="1-2", SYMLINK+="lidar"
+```
+
+Save the file.
+
+Now make it executable and run it:
+
+```bash
+chmod +x install.sh
+./install.sh
+```
+
+You should see:
+
+```
+USB Ports configured!..
+```
+
+This sets up the udev rules and reloads them.
+
+---
+
+### ⚠️ Final Steps: Update Launch and Config Files
+
+Now that the ports are set, make sure the port names in your launch/config files are correct.
+
+Check and ensure:
+
+#### 1. For ESP (micro-ROS firmware):
+
+```python
+tortoisebotpro_firmware/launch/micro_ros.launch.py
+```
+
+Set the serial device to:
+
+```python
+/dev/esp
+```
+
+#### 2. For LiDAR:
+
+```yaml
+ydlidar_ros2_driver/params/ydlidar.params
+```
+
+Set the port to:
+
+```yaml
+/dev/lidar
+```
+
+---
+
+### ⚠️ Disclaimer
+
+> \[!WARNING]
+> This step involves modifying system-level USB rules. Please do it **carefully and only on the NUC's SSH terminal**.
+> Misconfiguration can prevent your robot from detecting the ESP or LiDAR correctly.
+> Make sure the values for `KERNELS==...` are correct and mapped to the correct devices.
+
+---
+
+Let us know if you face any issues with this step!
