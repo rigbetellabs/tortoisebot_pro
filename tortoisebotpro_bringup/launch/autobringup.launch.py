@@ -15,9 +15,10 @@ def generate_launch_description():
   navigation_dir = os.path.join(get_package_share_directory('tortoisebotpro_navigation'), 'launch')
   rviz_launch_dir=os.path.join(get_package_share_directory('tortoisebotpro_description'), 'launch')
   gazebo_launch_dir=os.path.join(get_package_share_directory('tortoisebotpro_gazebo'), 'launch')
-  # ydlidar_launch_dir=os.path.join(get_package_share_directory('ydlidar_ros2_driver'), 'launch')
+  ydlidar_launch_dir=os.path.join(get_package_share_directory('ydlidar_ros2_driver'), 'launch')
   # camera_launch_dir=os.path.join(get_package_share_directory('v4l2_camera'), 'launch')
   # cartographer_launch_dir=os.path.join(get_package_share_directory('tortoisebotpro_slam'), 'launch')
+  micro_ros_launch_dir=os.path.join(get_package_share_directory('tortoisebotpro_firmware'), 'launch')
   prefix_address = get_package_share_directory('tortoisebotpro_navigation') 
   default_model_path = os.path.join(pkg_share, 'models/urdf/tortoisebotpro.xacro')
   default_rviz_config_path = os.path.join(get_package_share_directory('tortoisebotpro_description'), 'rviz/tortoisebotpro_sensor_display.rviz')
@@ -28,7 +29,7 @@ def generate_launch_description():
   
   map_file=LaunchConfiguration('map')
   map_directory = os.path.join(get_package_share_directory(
-        'tortoisebotpro_navigation'), 'maps','room2.yaml')
+        'tortoisebotpro_navigation'), 'maps','maps.yaml')
   use_sim_time=LaunchConfiguration('use_sim_time')
   exploration=LaunchConfiguration('exploration')   
   
@@ -45,7 +46,8 @@ def generate_launch_description():
   state_publisher_launch_cmd=IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(rviz_launch_dir, 'state_publisher.launch.py')),
-            launch_arguments={'use_sim_time':use_sim_time}.items())
+            launch_arguments={'use_sim_time':use_sim_time,
+                              'model': default_model_path}.items())
 
   gazebo_launch_cmd=IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -58,24 +60,23 @@ def generate_launch_description():
             os.path.join(navigation_dir, 'navigation.launch.py')),
         launch_arguments={'params_file': params_file_robot}.items())
   
-  # ydlidar_launch_cmd=IncludeLaunchDescription(
-  #       PythonLaunchDescriptionSource(
-  #           os.path.join(ydlidar_launch_dir, 'ydlidar_launch.py')),
-  #           condition=IfCondition(PythonExpression(['not ', use_sim_time])),
-  #           launch_arguments={'use_sim_time':use_sim_time}.items())
+  ydlidar_launch_cmd=IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(ydlidar_launch_dir, 'ydlidar_launch.py')),
+            condition=IfCondition(PythonExpression(['not ', use_sim_time])),
+            launch_arguments={'use_sim_time':use_sim_time}.items())
+  
+  micro_ros_launch_cmd=IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(micro_ros_launch_dir, 'micro_ros.launch.py')),
+            condition=IfCondition(PythonExpression(['not ', use_sim_time])),
+            launch_arguments={'use_sim_time':use_sim_time}.items())
   
   camera_drive_node = Node(
         package='v4l2_camera',
         condition=IfCondition(PythonExpression(['not ', use_sim_time])),
         executable='v4l2_camera_node',
         name ='camera_publisher',
-    )
-  camera_node = Node(
-      package='camera_ros',
-      condition=IfCondition(PythonExpression(['not ', use_sim_time])),
-      executable='camera_node',
-      name ='pi_camera',
-      parameters= [{'height': 360},{'width': 480}],
     )
 
   return LaunchDescription([
@@ -114,8 +115,9 @@ def generate_launch_description():
     state_publisher_launch_cmd,
     camera_drive_node,
     gazebo_launch_cmd,
-    navigation_launch_cmd, 
+    ydlidar_launch_cmd,
+    navigation_launch_cmd,
+    micro_ros_launch_cmd,
 
   ]
 )
-
