@@ -26,7 +26,7 @@ def generate_launch_description():
   default_model_path = os.path.join(pkg_share, 'models/urdf/tortoisebotpro.xacro')
   default_rviz_config_path = os.path.join(get_package_share_directory('tortoisebotpro_description'), 'rviz/tortoisebotpro_sensor_display.rviz')
  
-  
+  vr = LaunchConfiguration('vr')
   params_file_sim = os.path.join(prefix_address, 'config', 'nav2_params_simulation.yaml')
   params_file_robot = os.path.join(prefix_address, 'config', 'nav2_params.yaml')
   ros_ip = LaunchConfiguration('ros_ip')
@@ -86,6 +86,7 @@ def generate_launch_description():
     package='tortoisebotpro_bringup',  # Replace with your actual package name
     executable='robot_pose_publisher',
     name='robot_pose_publisher',
+    condition=IfCondition(PythonExpression(['not ', use_sim_time, ' and ', vr])),
     output='screen',
     parameters=[{
         'base_frame': 'base_link',
@@ -123,14 +124,14 @@ def generate_launch_description():
         package='tortoisebotpro_bringup',
         executable='goal_status_publisher',
         name='ros_nav_status',
-        condition=IfCondition(PythonExpression(['not ', use_sim_time])),
+        condition=IfCondition(PythonExpression(['not ', use_sim_time, ' and ', vr])),
         output='screen',
     )
   nav2_goal_canceller_node = Node(
         package='tortoisebotpro_bringup',
         executable='nav2_goal_canceller',
         name='nav2_goal_canceller_node',
-        condition=IfCondition(PythonExpression(['not ', use_sim_time])),
+        condition=IfCondition(PythonExpression(['not ', use_sim_time, ' and ', vr])),
         output='screen',
         respawn=True,
     )
@@ -138,6 +139,7 @@ def generate_launch_description():
             package='ros_tcp_endpoint',
             executable='default_server_endpoint',
             name='tcp_endpoint',
+            condition=IfCondition(PythonExpression(['not ', use_sim_time, ' and ', vr])),
             parameters=[
                 {'ROS_IP': ros_ip},
                 {'ROS_TCP_PORT': 10000}
@@ -164,24 +166,6 @@ def generate_launch_description():
             ]
         )
     )
-  delayed_launch_actions = [
-        TimerAction(
-            period=6.0,  # Wait 5 seconds after launch starts
-            actions=[
-                    rviz_node,
-                    state_publisher_launch_cmd,
-                    camera_drive_node,
-                    gazebo_launch_cmd,
-                    ydlidar_launch_cmd,
-                    navigation_launch_cmd,
-                    micro_ros_launch_cmd,
-                    pose_publisher_cmd ,
-                    ros_tcp_endpoint_node,
-                    ros_nav_status,
-                    nav2_goal_canceller_node,
-            ]
-        )
-    ]
   return LaunchDescription([
 
     SetEnvironmentVariable('RCUTILS_LOGGING_BUFFERED_STREAM', '1'),
@@ -199,6 +183,8 @@ def generate_launch_description():
                                     description='ROS IP address for TCP endpoint'),
     launch.actions.DeclareLaunchArgument(name='enable_camera', default_value='False',
         description='Flag to enable camera (set to False to disable camera)'),
+    launch.actions.DeclareLaunchArgument(name='vr', default_value='False',
+                            description='ROS IP address for TCP endpoint'),
     Node(
         package='nav2_map_server',
         condition=IfCondition(PythonExpression(['not ', exploration])),
