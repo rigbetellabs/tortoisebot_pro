@@ -1,4 +1,4 @@
-# Install script for directory: /home/inteli5/ros2_ws/src/tortoisebot_pro-ros2/YDLidar-SDK/core
+# Install script for directory: /home/tortoisebotpro/ros2_ws/src/tortoisebot_pro/YDLidar-SDK/core
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,11 +44,11 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/inteli5/ros2_ws/src/tortoisebot_pro-ros2/YDLidar-SDK/build/core/base/cmake_install.cmake")
-  include("/home/inteli5/ros2_ws/src/tortoisebot_pro-ros2/YDLidar-SDK/build/core/common/cmake_install.cmake")
-  include("/home/inteli5/ros2_ws/src/tortoisebot_pro-ros2/YDLidar-SDK/build/core/math/cmake_install.cmake")
-  include("/home/inteli5/ros2_ws/src/tortoisebot_pro-ros2/YDLidar-SDK/build/core/network/cmake_install.cmake")
-  include("/home/inteli5/ros2_ws/src/tortoisebot_pro-ros2/YDLidar-SDK/build/core/serial/cmake_install.cmake")
+  include("/home/tortoisebotpro/ros2_ws/src/tortoisebot_pro/YDLidar-SDK/build/core/base/cmake_install.cmake")
+  include("/home/tortoisebotpro/ros2_ws/src/tortoisebot_pro/YDLidar-SDK/build/core/common/cmake_install.cmake")
+  include("/home/tortoisebotpro/ros2_ws/src/tortoisebot_pro/YDLidar-SDK/build/core/math/cmake_install.cmake")
+  include("/home/tortoisebotpro/ros2_ws/src/tortoisebot_pro/YDLidar-SDK/build/core/network/cmake_install.cmake")
+  include("/home/tortoisebotpro/ros2_ws/src/tortoisebot_pro/YDLidar-SDK/build/core/serial/cmake_install.cmake")
 
 endif()
 

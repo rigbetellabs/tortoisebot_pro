@@ -1,4 +1,4 @@
-# Install script for directory: /home/inteli5/ros2_ws/src/tortoisebot_pro-ros2/YDLidar-SDK/src/filters
+# Install script for directory: /home/tortoisebotpro/ros2_ws/src/tortoisebot_pro/YDLidar-SDK/src/filters
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

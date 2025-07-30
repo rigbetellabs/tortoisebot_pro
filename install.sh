@@ -4,8 +4,8 @@
 
 # # Install udev rules
 RULE_CONTENT=$(cat <<EOL
-SUBSYSTEM=="tty", KERNELS=="1-2", SYMLINK+="esp"
-SUBSYSTEM=="tty", KERNELS=="1-1", SYMLINK+="lidar"
+SUBSYSTEM=="tty", KERNELS=="3-2", SYMLINK+="esp"
+SUBSYSTEM=="tty", KERNELS=="3-3", SYMLINK+="lidar"
 EOL
 )
 

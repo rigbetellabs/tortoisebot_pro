@@ -8,12 +8,12 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/inteli5/ros2_ws/src/tortoisebot_pro-ros2/YDLidar-SDK/examples/tri_test.cpp" "examples/CMakeFiles/tri_test.dir/tri_test.cpp.o" "gcc" "examples/CMakeFiles/tri_test.dir/tri_test.cpp.o.d"
+  "/home/tortoisebotpro/ros2_ws/src/tortoisebot_pro/YDLidar-SDK/examples/tri_test.cpp" "examples/CMakeFiles/tri_test.dir/tri_test.cpp.o" "gcc" "examples/CMakeFiles/tri_test.dir/tri_test.cpp.o.d"
   )
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/inteli5/ros2_ws/src/tortoisebot_pro-ros2/YDLidar-SDK/build/CMakeFiles/ydlidar_sdk.dir/DependInfo.cmake"
+  "/home/tortoisebotpro/ros2_ws/src/tortoisebot_pro/YDLidar-SDK/build/CMakeFiles/ydlidar_sdk.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

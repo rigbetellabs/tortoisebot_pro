@@ -12,10 +12,10 @@ def generate_launch_description():
             output='screen',
             arguments=["serial", "--dev", "/dev/esp","-b", "921600"]),
         
-        Node(
-        package='tortoisebotpro_firmware',
-        executable='rbl_logger.pyc',
-        name='RBL_LOGGER',
-        )
+        # Node(
+        # package='tortoisebotpro_firmware',
+        # executable='rbl_logger.pyc',
+        # name='RBL_LOGGER',
+        # )
 
     ])

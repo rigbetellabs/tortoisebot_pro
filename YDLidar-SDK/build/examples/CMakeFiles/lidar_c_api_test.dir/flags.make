@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_DEFINES = 
 
-C_INCLUDES = -I/home/inteli5/ros2_ws/src/tortoisebot_pro-ros2/YDLidar-SDK/. -I/home/inteli5/ros2_ws/src/tortoisebot_pro-ros2/YDLidar-SDK/core -I/home/inteli5/ros2_ws/src/tortoisebot_pro-ros2/YDLidar-SDK/src -I/home/inteli5/ros2_ws/src/tortoisebot_pro-ros2/YDLidar-SDK -I/home/inteli5/ros2_ws/src/tortoisebot_pro-ros2/YDLidar-SDK/.. -I/home/inteli5/ros2_ws/src/tortoisebot_pro-ros2/YDLidar-SDK/build/examples
+C_INCLUDES = -I/home/tortoisebotpro/ros2_ws/src/tortoisebot_pro/YDLidar-SDK/. -I/home/tortoisebotpro/ros2_ws/src/tortoisebot_pro/YDLidar-SDK/core -I/home/tortoisebotpro/ros2_ws/src/tortoisebot_pro/YDLidar-SDK/src -I/home/tortoisebotpro/ros2_ws/src/tortoisebot_pro/YDLidar-SDK -I/home/tortoisebotpro/ros2_ws/src/tortoisebot_pro/YDLidar-SDK/.. -I/home/tortoisebotpro/ros2_ws/src/tortoisebot_pro/YDLidar-SDK/build/examples
 
 C_FLAGS = -fPIC -std=c++11
 

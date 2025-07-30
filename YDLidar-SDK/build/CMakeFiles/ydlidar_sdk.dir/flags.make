@@ -5,13 +5,13 @@
 # compile CXX with /usr/bin/c++
 C_DEFINES = 
 
-C_INCLUDES = -I/home/inteli5/ros2_ws/src/tortoisebot_pro-ros2/YDLidar-SDK/. -I/home/inteli5/ros2_ws/src/tortoisebot_pro-ros2/YDLidar-SDK/core -I/home/inteli5/ros2_ws/src/tortoisebot_pro-ros2/YDLidar-SDK/src -I/home/inteli5/ros2_ws/src/tortoisebot_pro-ros2/YDLidar-SDK -I/home/inteli5/ros2_ws/src/tortoisebot_pro-ros2/YDLidar-SDK/build
+C_INCLUDES = -I/home/tortoisebotpro/ros2_ws/src/tortoisebot_pro/YDLidar-SDK/. -I/home/tortoisebotpro/ros2_ws/src/tortoisebot_pro/YDLidar-SDK/core -I/home/tortoisebotpro/ros2_ws/src/tortoisebot_pro/YDLidar-SDK/src -I/home/tortoisebotpro/ros2_ws/src/tortoisebot_pro/YDLidar-SDK -I/home/tortoisebotpro/ros2_ws/src/tortoisebot_pro/YDLidar-SDK/build
 
 C_FLAGS = -fPIC
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/inteli5/ros2_ws/src/tortoisebot_pro-ros2/YDLidar-SDK/. -I/home/inteli5/ros2_ws/src/tortoisebot_pro-ros2/YDLidar-SDK/core -I/home/inteli5/ros2_ws/src/tortoisebot_pro-ros2/YDLidar-SDK/src -I/home/inteli5/ros2_ws/src/tortoisebot_pro-ros2/YDLidar-SDK -I/home/inteli5/ros2_ws/src/tortoisebot_pro-ros2/YDLidar-SDK/build
+CXX_INCLUDES = -I/home/tortoisebotpro/ros2_ws/src/tortoisebot_pro/YDLidar-SDK/. -I/home/tortoisebotpro/ros2_ws/src/tortoisebot_pro/YDLidar-SDK/core -I/home/tortoisebotpro/ros2_ws/src/tortoisebot_pro/YDLidar-SDK/src -I/home/tortoisebotpro/ros2_ws/src/tortoisebot_pro/YDLidar-SDK -I/home/tortoisebotpro/ros2_ws/src/tortoisebot_pro/YDLidar-SDK/build
 
 CXX_FLAGS =  -std=c++11 -fPIC
 
